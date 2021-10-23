@@ -24,7 +24,7 @@ class CardController {
     try {
       const { id } = req.params;
       if (!id) {
-        res.status(400).json({message: 'Id не указан'})
+        res.status(400).json({ message: 'Id не указан' })
       }
       const card = await Card.findById(id);
       return res.json(card);
@@ -35,7 +35,12 @@ class CardController {
 
   async update(req, res) {
     try {
-
+      const post = req.body;
+      if (!post._id) {
+        res.status(400).json({ message: 'Id не указан' })
+      }
+      const updatedCard = await Card.findByIdAndUpdate(post._id, post, {new: true});
+      return res.json(updatedCard);
     } catch (e) {
       res.status(500).json(e);
     }
@@ -43,7 +48,12 @@ class CardController {
 
   async delete(req, res) {
     try {
-
+      const { id } = req.params;
+      if (!id) {
+        res.status(400).json({ message: 'Id не указан' })
+      }
+      const card = await Card.findByIdAndDelete(id);
+      return res.json(card);
     } catch (e) {
       res.status(500).json(e);
     }
