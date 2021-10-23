@@ -1,24 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Card from './Card.js';
+import router from './router.js';
 
 const PORT = 5000;
 const DB_URL = 'mongodb+srv://user:user@cluster0.ivmut.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const app = express();
 
-app.use(express.json())
-
-app.post('/', async (req, res) => {
-  try {
-    const { name, sum, actualDate } = req.body;
-    const card = await Card.create({ name, sum, actualDate });
-    res.json(card);
-  } catch (e) {
-    res.status(500).json(e);
-  }
-
-
-});
+app.use(express.json());
+app.use('/api', router);
 
 async function startApp() {
   try {
