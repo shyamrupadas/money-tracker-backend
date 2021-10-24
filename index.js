@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import router from './router.js';
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb+srv://user:user@cluster0.ivmut.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const app = express();
 

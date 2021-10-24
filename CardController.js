@@ -1,61 +1,49 @@
-import Card from './Card.js';
+
+import CardService from './CardService.js';
 
 class CardController {
   async create(req, res) {
     try {
-      const { name, sum, actualDate } = req.body;
-      const card = await Card.create({ name, sum, actualDate });
+      const card = await CardService.create(req.body);
       res.json(card);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500).json(e.message);
     }
   }
 
   async getAll(req, res) {
     try {
-      const cards = await Card.find();
+      const cards = await CardService.getAll();
       return res.json(cards);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500).json(e.message);
     }
   }
 
   async getOne(req, res) {
     try {
-      const { id } = req.params;
-      if (!id) {
-        res.status(400).json({ message: 'Id не указан' })
-      }
-      const card = await Card.findById(id);
+      const card = await CardService.getOne(req.params.id);
       return res.json(card);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500).json(e.message);
     }
   }
 
   async update(req, res) {
     try {
-      const post = req.body;
-      if (!post._id) {
-        res.status(400).json({ message: 'Id не указан' })
-      }
-      const updatedCard = await Card.findByIdAndUpdate(post._id, post, {new: true});
+     const updatedCard = await CardService.update(req.body);
       return res.json(updatedCard);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500).json(e.message);
     }
   }
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      if (!id) {
-        res.status(400).json({ message: 'Id не указан' })
-      }
-      const card = await Card.findByIdAndDelete(id);
+      const card = await CardService.delete(req.params.id);
       return res.json(card);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500).json(e.message);
     }
   }
 }
