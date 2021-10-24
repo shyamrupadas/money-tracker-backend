@@ -1,11 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import router from './router.js';
+import corsMiddleware from './middleware/cors.middleware.js'
 
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb+srv://user:user@cluster0.ivmut.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const app = express();
 
+app.use(corsMiddleware);
 app.use(express.json());
 app.use('/api', router);
 
