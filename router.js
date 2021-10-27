@@ -1,6 +1,7 @@
 import Router from 'express';
 import CardController from './CardController.js';
 import AuthController from './AuthController.js';
+import { check } from 'express-validator';
 
 const router = new Router();
 
@@ -10,7 +11,10 @@ router.get('/cards/:id', CardController.getOne);
 router.put('/cards', CardController.update);
 router.delete('/cards/:id', CardController.delete);
 
-router.post('/registration', AuthController.registration);
+router.post('/registration', [
+  check('userName', 'Имя пользователя не может быть пустым').notEmpty(),
+  check('password', 'Пароль должен быть от 4 до 10 символов').isLength({min: 4, max: 10})
+], AuthController.registration);
 router.post('/login', AuthController.login);
 router.get('/users', AuthController.getUsers);
 
