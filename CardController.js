@@ -1,4 +1,3 @@
-
 import CardService from './CardService.js';
 
 class CardController {
