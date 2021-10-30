@@ -46,11 +46,11 @@ class AuthController {
       const user = await User.findOne({ userName });
 
       if (!user) {
-        return res.status(400).json({ message: `Пользователь ${userName} не найден` });
+        return res.status(404).json({ message: `Пользователь ${userName} не найден` });
       }
 
-      const validPassword = bcrypt.compareSync(password, user.password)
-      if (!validPassword) {
+      const isPasswordValid = bcrypt.compareSync(password, user.password)
+      if (!isPasswordValid) {
         return res.status(400).json({ message: 'Введен неверный пароль' });
       }
 
@@ -59,12 +59,31 @@ class AuthController {
         token,
         user: {
           id: user._id,
+          roles: user.roles,
           userName: user.userName
         }
       });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Login error' });
+    }
+  }
+
+  async auth(req, res) {
+    try {
+      const user = await User.findOne({_id: req.user.id});
+      const token = generateAccessToken(user._id, user.roles)
+      return res.json({
+        token,
+        user: {
+          id: user._id,
+          roles: user.roles,
+          userName: user.userName
+        }
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json(e.message);
     }
   }
 
