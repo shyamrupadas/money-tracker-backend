@@ -1,5 +1,5 @@
 import Router from 'express';
-import CardController from '../CardController.js';
+import CardController from '../controllers/CardController.js';
 
 const cardRoutes = new Router();
 

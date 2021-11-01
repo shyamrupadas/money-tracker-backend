@@ -1,4 +1,4 @@
-import Card from './models/Card.js';
+import Card from '../models/Card.js';
 
 class CardService {
   async create(card) {
