@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-const Card = new mongoose.Schema({
+const Account = new mongoose.Schema({
   name: {type: String, required: true},
   sum: {type: Number, required: true},
   actualDate: {type: Number, required: true},
   user: {type: mongoose.ObjectId, ref: 'User'}
 });
 
-export default mongoose.model('Card', Card);
+export default mongoose.model('Account', Account);

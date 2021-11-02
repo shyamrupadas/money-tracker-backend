@@ -1,12 +1,14 @@
 import CardService from '../services/CardService.js';
+import User from '../models/User.js';
 
 class CardController {
   async create(req, res) {
     try {
-      const card = await CardService.create(req.body);
+      // const user = await User.findOne({_id: req.user.id});
+      const card = await CardService.create({ ...req.body, user: req.user.id });
       res.json(card);
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e);
     }
   }
 
