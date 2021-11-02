@@ -17,7 +17,7 @@ class AccountController {
 
   async getAll(req, res) {
     try {
-      const accounts = await AccountService.getAll();
+      const accounts = await AccountService.getAll(req.user.id);
       return res.json(accounts);
     } catch (e) {
       res.status(500).json(e.message);

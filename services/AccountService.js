@@ -5,8 +5,8 @@ class AccountService {
     return await Account.create(account);
   }
 
-  async getAll() {
-    return Account.find();
+  async getAll(userId) {
+    return Account.find({ user: userId });
   }
 
   async getOne(id) {
